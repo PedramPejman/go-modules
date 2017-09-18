@@ -2,12 +2,12 @@ package main
 
 import (
   "fmt"
-	"math"
+  "math"
   "math/rand"
   "os"
-	"os/exec"
+  "os/exec"
   "os/signal"
-	"strings"
+  "strings"
   "time"
 )
 
@@ -32,16 +32,16 @@ func receive(answer *int, i int) {
 
 func main() {
   // Register signal handler
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	go func(){
-		for _ = range c {
-			// Restore the echoing state when exiting
+  c := make(chan os.Signal, 1)
+  signal.Notify(c, os.Interrupt)
+  go func(){
+    for _ = range c {
+      // Restore the echoing state when exiting
       fmt.Println()
-			exec.Command("stty", "-F", "/dev/tty", "echo").Run()
+      exec.Command("stty", "-F", "/dev/tty", "echo").Run()
       os.Exit(0)
-		}
-	}()
+    }
+  }()
 
   // Start timer
   start := time.Now()
@@ -59,7 +59,7 @@ func main() {
     // Receive answer
     receive(&answer, i)
     // Compare and retry if necessary
-		for answer != num {
+    for answer != num {
       fmt.Println("\rWrong, try again")
       fmt.Printf("%d", num)
       receive(&answer, i)
